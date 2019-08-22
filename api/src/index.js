@@ -5,12 +5,54 @@ const http = require("http");
 const hostname = "0.0.0.0";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
 
-function middleware(req, res) {
-  if (req.url === "/") {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/html");
+function log(severity, event, data) {
+  console.log(
+    JSON.stringify({
+      timestamp: new Date().toISOString(),
+      severity,
+      event,
+      data
+    })
+  );
+}
 
-    res.end(`
+function info(event, data) {
+  log("INFO", event, data);
+}
+
+function error(event, data, error) {
+  log("ERROR", event, {
+    ...data,
+    error: {
+      message: error.message,
+      stack: error.stack
+    }
+  });
+}
+
+function delay(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}
+
+async function middleware(req, res) {
+  const requestStart = process.hrtime.bigint();
+  const gatherData = () => ({
+    request: {
+      url: req.url,
+      headers: req.headers
+    },
+    response: {
+      statusCode: res.statusCode
+    },
+    duration: Number((process.hrtime.bigint() - requestStart) / BigInt(1e6))
+  });
+
+  try {
+    if (req.url === "/") {
+      res.statusCode = 200;
+      res.setHeader("Content-Type", "text/html");
+
+      res.end(`
       <!DOCTYPE html>
       <html>
       <head>
@@ -22,19 +64,28 @@ function middleware(req, res) {
       </body>
       </html>
     `);
-  } else if (req.url === "/redirect") {
-    res.statusCode = 302;
-    res.setHeader("Location", "/");
-    res.end("Found /");
-  } else if (req.url === "/user") {
+    } else if (req.url === "/redirect") {
+      res.statusCode = 302;
+      res.setHeader("Location", "/");
+      res.end("Found /");
+    } else if (req.url === "/user") {
+      info("user:connect");
+      await delay(20 + Math.floor(Math.random() * 1000));
+      throw new Error("meh");
+    } else if (req.url === "/health") {
+      res.statusCode = 200;
+      res.end("Healthy");
+    } else {
+      res.statusCode = 404;
+      res.end("Not Found\n");
+    }
+
+    info("request", gatherData());
+  } catch (e) {
     res.statusCode = 500;
     res.end("Internal server error");
-  } else if (req.url === "/health") {
-    res.statusCode = 200;
-    res.end("Healthy");
-  } else {
-    res.statusCode = 404;
-    res.end("Not Found\n");
+
+    error("request", gatherData(), e);
   }
 }
 
@@ -45,5 +96,5 @@ server.once("error", e => {
   process.exit(1);
 });
 server.listen(port, hostname, () => {
-  console.log(`Running on http://${hostname}:${port}`);
+  info("server:start", { address: `http://${hostname}:${port}` });
 });
