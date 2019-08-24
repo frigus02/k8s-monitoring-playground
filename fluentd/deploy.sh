@@ -4,7 +4,6 @@ set -e
 
 configmap() {
     kubectl create configmap fluentd \
-        --namespace kube-system \
         --dry-run \
         --output yaml \
         --from-file=fluent.conf=./conf/fluent.conf \

@@ -2,16 +2,13 @@ apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
   name: fluentd
-  namespace: kube-system
   labels:
     k8s-app: fluentd-logging
-    version: v1
 spec:
   template:
     metadata:
       labels:
         k8s-app: fluentd-logging
-        version: v1
     spec:
       # tolerations:
       #   - key: node-role.kubernetes.io/master
@@ -22,6 +19,8 @@ spec:
           env:
             - name: FLUENT_ELASTICSEARCH_SED_DISABLE
               value: "1"
+          ports:
+            - containerPort: 24231
           resources:
             limits:
               memory: 200Mi
