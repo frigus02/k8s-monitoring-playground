@@ -4,7 +4,7 @@ metadata:
   name: api
 spec:
   selector:
-    app: api
+    k8s-app: api
   ports:
     - name: http
       port: 80
