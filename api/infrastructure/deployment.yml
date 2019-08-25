@@ -18,6 +18,7 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 80
+            - containerPort: 24231
           readinessProbe:
             httpGet:
               path: /health

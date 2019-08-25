@@ -5,5 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/index.js"
+  },
+  "dependencies": {
+    "prom-client": "^11.5.3"
   }
 }

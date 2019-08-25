@@ -1,9 +1,30 @@
 "use strict";
 
 const http = require("http");
+const prometheus = require("prom-client");
 
 const hostname = "0.0.0.0";
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8080;
+
+prometheus.collectDefaultMetrics({
+  timeout: 5000,
+  prefix: "api_"
+});
+const metrics = {
+  userConnects: new prometheus.Counter({
+    name: "api_user_connect_count",
+    help: "Count of connections to DB to fetch user information"
+  }),
+  requestErrors: new prometheus.Counter({
+    name: "api_request_error_count",
+    help: "Count of requests, which ended with an error"
+  }),
+  requestDuration: new prometheus.Histogram({
+    name: "api_request_duration",
+    help: "Duration of request",
+    labelNames: ["path", "status_code"]
+  })
+};
 
 function log(severity, event, data) {
   console.log(
@@ -36,6 +57,9 @@ function delay(millis) {
 
 async function middleware(req, res) {
   const requestStart = process.hrtime.bigint();
+  const requestDurationTimer = metrics.requestDuration.startTimer({
+    path: req.url
+  });
   const gatherData = () => ({
     request: {
       url: req.url,
@@ -70,6 +94,7 @@ async function middleware(req, res) {
       res.end("Found /");
     } else if (req.url === "/user") {
       info("user:connect");
+      metrics.userConnects.inc();
       await delay(20 + Math.floor(Math.random() * 1000));
       throw new Error("meh");
     } else if (req.url === "/health") {
@@ -86,6 +111,9 @@ async function middleware(req, res) {
     res.end("Internal server error");
 
     error("request", gatherData(), e);
+    metrics.requestErrors.inc();
+  } finally {
+    requestDurationTimer({ status_code: res.statusCode });
   }
 }
 
@@ -97,4 +125,22 @@ server.once("error", e => {
 });
 server.listen(port, hostname, () => {
   info("server:start", { address: `http://${hostname}:${port}` });
+});
+
+const metricsServer = http.createServer((req, res) => {
+  if (req.url === "/metrics") {
+    res.statusCode = 200;
+    res.end(prometheus.register.metrics());
+  } else {
+    res.statusCode = 404;
+    res.end("Not Found\n");
+  }
+});
+metricsServer.once("error", e => {
+  console.error(e);
+  server.close();
+  process.exit(1);
+});
+metricsServer.listen(24231, hostname, () => {
+  info("metricsserver:start", { address: `http://${hostname}:24231` });
 });
