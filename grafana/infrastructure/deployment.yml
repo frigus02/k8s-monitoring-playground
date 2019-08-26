@@ -19,6 +19,10 @@ spec:
               value: "true"
             - name: GF_AUTH_ANONYMOUS_ORG_ROLE
               value: Admin
+            - name: GF_SERVER_ENABLE_GZIP
+              value: "true"
+            - name: GF_ALERTING_ENABLED
+              value: "false"
           resources:
             limits:
               cpu: 100m
@@ -31,8 +35,19 @@ spec:
               path: /login
               port: 3000
           volumeMounts:
-            - name: grafana-persistent-storage
-              mountPath: /var/lib/grafana
+            - name: provisioning-datasources
+              mountPath: /etc/grafana/provisioning/datasources
+            - name: provisioning-dashboards
+              mountPath: /etc/grafana/provisioning/dashboards
+            - name: dashboards
+              mountPath: /var/lib/grafana/dashboards
       volumes:
-        - name: grafana-persistent-storage
-          emptyDir: {}
+        - name: provisioning-datasources
+          configMap:
+            name: grafana-provisioning-datasources
+        - name: provisioning-dashboards
+          configMap:
+            name: grafana-provisioning-dashboards
+        - name: dashboards
+          configMap:
+            name: grafana-dashboards
