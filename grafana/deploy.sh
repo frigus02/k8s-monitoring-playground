@@ -6,21 +6,21 @@ configmap_provisioning_datasources() {
     kubectl create configmap grafana-provisioning-datasources \
         --dry-run \
         --output yaml \
-        --from-file=prometheus.yml=./config/provisioning/datasources/prometheus.yml
+        --from-file=./config/provisioning/datasources/
 }
 
 configmap_provisioning_dashboards() {
     kubectl create configmap grafana-provisioning-dashboards \
         --dry-run \
         --output yaml \
-        --from-file=files.yml=./config/provisioning/dashboards/files.yml
+        --from-file=./config/provisioning/dashboards/
 }
 
 configmap_dashboards() {
     kubectl create configmap grafana-dashboards \
         --dry-run \
         --output yaml \
-        --from-file=main.json=./config/dashboards/main.json
+        --from-file=./config/dashboards/
 }
 
 kyml cat infrastructure/* <(configmap_provisioning_datasources) <(configmap_provisioning_dashboards) <(configmap_dashboards) |
