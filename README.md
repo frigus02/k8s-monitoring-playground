@@ -17,6 +17,14 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 ## Usage
 
+1. Install [`kyml`](https://github.com/frigus02/kyml):
+
+   ```console
+   curl -sfL -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190103/kyml_20190103_darwin_amd64 && chmod +x /usr/local/bin/kyml
+   ```
+
+   It's used in the deploy scripts to apply Kubernetes manifests.
+
 1. Start local Docker registry:
 
    ```console
