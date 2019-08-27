@@ -72,3 +72,8 @@ This contains demo configurations for one application ([api](./api)) and tools t
    You can now access Grafana under http://localhost:30000
 
    There should be a Dashboard called "Main" with a few panels.
+
+## Alternatives?
+
+- Elastic stack: https://www.elastic.co/elasticsearch-kubernetes
+- Datadog: https://www.datadoghq.com/product/
