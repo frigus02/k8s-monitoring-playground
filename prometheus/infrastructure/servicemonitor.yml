@@ -1,12 +1,12 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: fluentd
+  name: general
   labels:
     monitoring: general
 spec:
   selector:
     matchLabels:
-      k8s-app: fluentd-logging
+      monitoring: general
   endpoints:
-    - port: http
+    - port: metrics

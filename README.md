@@ -54,12 +54,6 @@ This contains demo configurations for one application ([api](./api)) and tools t
    $ ./deploy.sh
    ```
 
-   Wait for the Prometheus Operator pod to be up and running. Then apply the Prometheus configuration:
-
-   ```console
-   $ kubectl apply -f config/
-   ```
-
    You can now access Prometheus under http://localhost:30900
 
 1. Deploy Grafana:

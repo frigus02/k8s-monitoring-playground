@@ -2,14 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  labels:
-    k8s-app: grafana
 spec:
+  selector:
+    matchLabels:
+      app: grafana
   replicas: 1
   template:
     metadata:
       labels:
-        k8s-app: grafana
+        app: grafana
     spec:
       containers:
         - image: grafana/grafana

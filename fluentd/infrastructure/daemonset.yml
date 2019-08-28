@@ -2,13 +2,14 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: fluentd
-  labels:
-    k8s-app: fluentd-logging
 spec:
+  selector:
+    matchLabels:
+      app: fluentd
   template:
     metadata:
       labels:
-        k8s-app: fluentd-logging
+        app: fluentd
     spec:
       # tolerations:
       #   - key: node-role.kubernetes.io/master

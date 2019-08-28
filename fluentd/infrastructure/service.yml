@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fluentd-prometheus
+  name: fluentd
   labels:
-    k8s-app: fluentd-logging
+    monitoring: general
 spec:
   selector:
-    k8s-app: fluentd-logging
+    app: fluentd
   ports:
-    - name: http
+    - name: metrics
       port: 24231
       protocol: TCP

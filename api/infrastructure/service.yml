@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: api
   labels:
-    k8s-app: api
+    monitoring: general
 spec:
   selector:
-    k8s-app: api
+    app: api
   ports:
     - name: http
       port: 80

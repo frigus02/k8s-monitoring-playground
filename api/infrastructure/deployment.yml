@@ -5,12 +5,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      k8s-app: api
+      app: api
   replicas: 2
   template:
     metadata:
       labels:
-        k8s-app: api
+        app: api
     spec:
       containers:
         - name: api
