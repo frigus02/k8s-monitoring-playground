@@ -33,6 +33,15 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 1. Start local Kubernetes server (tested with Docker for Mac)
 
+1. Deploy Alert tester:
+
+   ```console
+   $ cd alert-tester/
+   $ ./deploy.sh
+   ```
+
+   You can now access the alert tester under http://localhost:30905
+
 1. Deploy API:
 
    ```console

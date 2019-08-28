@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alert Tester</title>
+  </head>
+  <body>
+    <h1>Alert Tester (<span id="status">...</span>)</h1>
+    <h2>Received alerts</h2>
+    <ol id="alerts"></ol>
+    <template id="alert-template">
+      <li>
+        <span class="timestamp"></span>
+        <span class="status"></span>
+        <a class="source">Source</a>
+        <ul class="items"></ul>
+        <details>
+          <summary>Raw data</summary>
+          <pre class="raw-data"></pre>
+        </details>
+      </li>
+    </template>
+    <template id="alert-item-template">
+      <li>
+        <span class="status"></span>
+        <span class="labels"></span>
+        <a class="source">Source</a>
+      </li>
+    </template>
+    <script>
+      const elAlerts = document.getElementById("alerts");
+      const elStatus = document.getElementById("status");
+      const alertTemplate = document.getElementById("alert-template");
+      const alertItemTemplate = document.getElementById("alert-item-template");
+
+      const formatLabels = labels =>
+        Object.keys(labels)
+          .map(key => `[${key}=${labels[key]}]`)
+          .join(" ");
+
+      const addAlert = alert => {
+        const li = document.importNode(alertTemplate.content, true);
+        li.querySelector(".timestamp").innerText = new Date().toISOString();
+        li.querySelector(".status").innerText = alert.status;
+        li.querySelector(".source").href = alert.externalURL;
+        li.querySelector(".items").append(
+          ...alert.alerts.map(item => {
+            const li = document.importNode(alertItemTemplate.content, true);
+            li.querySelector(".status").innerText = item.status;
+            li.querySelector(".labels").innerText = formatLabels(item.labels);
+            li.querySelector(".source").href = item.generatorURL;
+            return li;
+          })
+        );
+        li.querySelector(".raw-data").innerText = JSON.stringify(
+          alert,
+          null,
+          4
+        );
+        elAlerts.append(li);
+      };
+
+      const ws = new WebSocket(`ws://${location.host}/connect`);
+      ws.addEventListener("open", () => {
+        elStatus.innerText = "connected";
+      });
+      ws.addEventListener("close", () => {
+        elStatus.innerText = "disconnected";
+      });
+      ws.addEventListener("message", e => {
+        console.log("received", e.data);
+        const data = JSON.parse(e.data);
+        if (data.event === "hook") {
+          addAlert(data.data);
+        }
+      });
+    </script>
+  </body>
+</html>

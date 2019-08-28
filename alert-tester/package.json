@@ -1,0 +1,12 @@
+{
+  "name": "alert-tester",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.1.2"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  }
+}
