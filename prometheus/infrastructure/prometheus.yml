@@ -3,6 +3,16 @@ kind: Prometheus
 metadata:
   name: prometheus
 spec:
+  alerting:
+    alertmanagers:
+      - namespace: default
+        name: alertmanager-general
+        port: web
+  externalUrl: http://localhost:30900
+  ruleSelector:
+    matchLabels:
+      role: alert-rules
+      prometheus: prometheus
   serviceAccountName: prometheus
   serviceMonitorSelector:
     matchLabels:

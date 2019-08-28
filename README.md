@@ -54,7 +54,7 @@ This contains demo configurations for one application ([api](./api)) and tools t
    $ ./deploy.sh
    ```
 
-   You can now access Prometheus under http://localhost:30900
+   You can now access Prometheus under http://localhost:30900 and the alert manager under http://localhost:30903
 
 1. Deploy Grafana:
 
