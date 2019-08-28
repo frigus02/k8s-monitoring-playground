@@ -11,3 +11,11 @@ spec:
       rules:
         - alert: ExampleAlert
           expr: vector(1)
+    - name: ./api.rules
+      rules:
+        - alert: HighErrorRate
+          expr: increase(api_request_error_count[1m]) > 1
+          labels:
+            app: api
+          annotations:
+            summary: "Pod {{ $labels.pod }} throws errors"

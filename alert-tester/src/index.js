@@ -1,8 +1,11 @@
 "use strict";
 
-const http = require("http");
 const { readFile } = require("fs").promises;
+const http = require("http");
 const { resolve: resolvePath } = require("path");
+
+const fetch = require("node-fetch");
+
 const { info, error } = require("./logger");
 const { broadcast, handleUpgrade } = require("./wss");
 
@@ -62,9 +65,11 @@ async function middleware(req, res) {
     );
     info("hook", alert);
     ok(res);
+  } else if (req.url === "/trigger") {
+    await Promise.all([fetch("http://api/user"), fetch("http://api/user")]);
+    ok(res);
   } else if (req.url === "/health") {
-    res.statusCode = 200;
-    res.end("Healthy");
+    ok(res);
   } else if (!req.url.includes("..")) {
     try {
       const path = req.url === "/" ? "index.html" : req.url;

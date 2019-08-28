@@ -7,6 +7,7 @@
   </head>
   <body>
     <h1>Alert Tester (<span id="status">...</span>)</h1>
+
     <h2>Received alerts</h2>
     <ol id="alerts"></ol>
     <template id="alert-template">
@@ -28,11 +29,24 @@
         <a class="source">Source</a>
       </li>
     </template>
+
+    <h2>Trigger alerts</h2>
+    <button id="trigger">Trigger</button>
+    <ol id="triggered"></ol>
+    <template id="triggered-template">
+      <li>
+        <span class="timestamp"></span>
+      </li>
+    </template>
+
     <script>
       const elAlerts = document.getElementById("alerts");
       const elStatus = document.getElementById("status");
       const alertTemplate = document.getElementById("alert-template");
       const alertItemTemplate = document.getElementById("alert-item-template");
+      const elTrigger = document.getElementById("trigger");
+      const elTriggered = document.getElementById("triggered");
+      const triggeredTemplate = document.getElementById("triggered-template");
 
       const formatLabels = labels =>
         Object.keys(labels)
@@ -60,6 +74,17 @@
         );
         elAlerts.append(li);
       };
+
+      elTrigger.addEventListener("click", async () => {
+        const res = await fetch("/trigger");
+        if (res.ok) {
+          const li = document.importNode(triggeredTemplate.content, true);
+          li.querySelector(".timestamp").innerText = new Date().toISOString();
+          elTriggered.append(li);
+        } else {
+          alert("Error triggering alert");
+        }
+      });
 
       const ws = new WebSocket(`ws://${location.host}/connect`);
       ws.addEventListener("open", () => {
