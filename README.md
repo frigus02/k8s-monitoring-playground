@@ -28,7 +28,7 @@ This contains demo configurations for one application ([api](./api)) and tools t
 1. Start local Docker registry:
 
    ```console
-   $ ./registry.sh
+   $ make registry
    ```
 
 1. Start local Kubernetes server (tested with Docker for Mac)
@@ -36,8 +36,7 @@ This contains demo configurations for one application ([api](./api)) and tools t
 1. Deploy Alert tester:
 
    ```console
-   $ cd alert-tester/
-   $ ./deploy.sh
+   $ make deploy-alert-tester
    ```
 
    You can now access the alert tester under http://localhost:30905
@@ -45,22 +44,19 @@ This contains demo configurations for one application ([api](./api)) and tools t
 1. Deploy API:
 
    ```console
-   $ cd api/
-   $ ./deploy.sh
+   $ make deploy-api
    ```
 
 1. Deploy Fluentd:
 
    ```console
-   $ cd fluentd/
-   $ ./deploy.sh
+   $ make deploy-fluentd
    ```
 
 1. Deploy Prometheus:
 
    ```console
-   $ cd prometheus/
-   $ ./deploy.sh
+   $ make deploy-prometheus
    ```
 
    You can now access Prometheus under http://localhost:30900 and the alert manager under http://localhost:30903
@@ -68,8 +64,7 @@ This contains demo configurations for one application ([api](./api)) and tools t
 1. Deploy Grafana:
 
    ```console
-   $ cd grafana/
-   $ ./deploy.sh
+   $ make deploy-grafana
    ```
 
    You can now access Grafana under http://localhost:30000
