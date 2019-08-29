@@ -10,3 +10,4 @@ spec:
       monitoring: general
   endpoints:
     - port: metrics
+      interval: "15s"
