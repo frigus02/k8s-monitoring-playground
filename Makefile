@@ -15,6 +15,18 @@ deploy-grafana: ## Deploy Grafana
 deploy-prometheus: ## Deploy Prometheus
 	@cd prometheus && ./deploy.sh
 
+open-alert-tester: ## Open alert tester in browser
+	@open http://localhost:30905
+
+open-grafana: ## Open Grafana in browser
+	@open http://localhost:30000
+
+open-prometheus: ## Open Prometheus in browser
+	@open http://localhost:30900
+
+open-alertmanager: ## Open Prometheus Alertmanager in browser
+	@open http://localhost:30903
+
 registry: ## Start local Docker registry on port 5000
 	@docker run \
     	-d \
