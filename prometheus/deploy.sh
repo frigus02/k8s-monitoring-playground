@@ -9,5 +9,8 @@ secret_alertmanager() {
         --from-file=./config/alertmanager.yaml
 }
 
+kubectl apply -f infrastructure/bundle.yml
+kubectl wait --for condition=established --timeout=60s crd/prometheuses.monitoring.coreos.com
+
 kyml cat infrastructure/* <(secret_alertmanager) |
     kubectl apply -f -
