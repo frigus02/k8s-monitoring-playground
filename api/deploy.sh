@@ -7,6 +7,4 @@ TAG=localhost:5000/monitoring-api
 docker build -t $TAG .
 docker push $TAG
 
-kyml cat infrastructure/* |
-    kyml resolve |
-    kubectl apply -f -
+kustomize build --enable_alpha_plugins infrastructure | kubectl apply -f -

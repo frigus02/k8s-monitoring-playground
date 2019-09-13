@@ -25,6 +25,14 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
    It's used in the deploy scripts to apply Kubernetes manifests.
 
+1. Install [`kustomize`](https://github.com/kubernetes-sigs/kustomize):
+
+   ```console
+   curl -sfL -o /usr/local/bin/kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64 && chmod +x /usr/local/bin/kustomize
+   ```
+
+   It's used in the deploy scripts to apply Kubernetes manifests.
+
 1. Start local Docker registry:
 
    ```console
