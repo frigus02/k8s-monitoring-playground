@@ -17,18 +17,16 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 ## Usage
 
-1. Install [`kyml`](https://github.com/frigus02/kyml):
-
-   ```console
-   curl -sfL -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_darwin_amd64 && chmod +x /usr/local/bin/kyml
-   ```
-
-   It's used in the deploy scripts to apply Kubernetes manifests.
-
 1. Install [`kustomize`](https://github.com/kubernetes-sigs/kustomize):
 
    ```console
-   curl -sfL -o /usr/local/bin/kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64 && chmod +x /usr/local/bin/kustomize
+   $ curl -sfL -o /usr/local/bin/kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_$(uname | tr '[:upper:]' '[:lower:]')_amd64 && chmod +x /usr/local/bin/kustomize
+   ```
+
+   Then setup kustomize plugins:
+
+   ```console
+   $ ./kustomize-plugins/setup.sh
    ```
 
    It's used in the deploy scripts to apply Kubernetes manifests.
