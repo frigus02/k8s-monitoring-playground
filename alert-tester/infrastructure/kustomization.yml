@@ -4,4 +4,4 @@ resources:
   - deployment.yml
   - service.yml
 transformers:
-  - image-resolver.yml
+  - ../../kustomize-plugins/image-resolver/

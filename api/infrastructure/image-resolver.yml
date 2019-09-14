@@ -1,4 +1,0 @@
-apiVersion: com.github.frigus.k8s-monitoring-playground
-kind: ImageResolver
-metadata:
-  name: notImportantHere
