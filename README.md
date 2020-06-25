@@ -2,28 +2,29 @@
 
 > A place to play with monitoring solutions for applications running in a Kubernetes cluster
 
-This contains demo configurations for one application ([api](./api)) and tools to capture logs, generate metrics and show dashboards (Fluentd, Prometheus and Grafana).
+This contains demo configurations for one application ([api](./api)) and tools to capture traces, generate metrics and show dashboards (Linkerd, OpenTelemetry, Jaeger, Prometheus and Grafana).
 
-- The API
+- The API is instrumented and sends OpenTelemetry traces and metrics to an OpenTelemetry agent.
 
-  - is instrumented and provides Prometheus metrics on http://0.0.0.0:24231/metrics
-  - logs data in JSON
+- NGINX Ingress is instrumented and sends OpenTelemetry traces to the OpenTelemetry collector.
 
-- Fluentd grabs the logs and generates the same metrics for Prometheus, exposed on http://0.0.0.0:24231/metrics
+- The OpenTelemetry collector forwards traces to Jaeger and metrics to Prometheus.
 
-- Prometheus aggregates and stores all metrics
+- Prometheus aggregates and stores all metrics.
 
-- Grafana queries Prometheus to produce dashboards
+- Grafana queries Prometheus to produce dashboards.
+
+- Jaeger show traces.
 
 ## Usage
 
-1. Install [`kyml`](https://github.com/frigus02/kyml):
-
-   ```console
-   curl -sfL -o /usr/local/bin/kyml https://github.com/frigus02/kyml/releases/download/v20190906/kyml_20190906_darwin_amd64 && chmod +x /usr/local/bin/kyml
-   ```
+1. Install [`kyml`](https://github.com/frigus02/kyml).
 
    It's used in the deploy scripts to apply Kubernetes manifests.
+
+1. Install [`kind`](https://kind.sigs.k8s.io).
+
+1. Install [`linkerd`](https://linkerd.io/2/getting-started/#step-1-install-the-cli).
 
 1. Start local Docker registry:
 
@@ -31,47 +32,14 @@ This contains demo configurations for one application ([api](./api)) and tools t
    $ make registry
    ```
 
-1. Start local Kubernetes server (tested with Docker for Mac)
-
-1. Deploy Alert tester:
+1. Start local Kubernetes server:
 
    ```console
-   $ make deploy-alert-tester
+   $ make cluster
    ```
-
-   You can now access the alert tester under http://localhost:30905
 
 1. Deploy API:
 
    ```console
    $ make deploy-api
    ```
-
-1. Deploy Fluentd:
-
-   ```console
-   $ make deploy-fluentd
-   ```
-
-1. Deploy Prometheus:
-
-   ```console
-   $ make deploy-prometheus
-   ```
-
-   You can now access Prometheus under http://localhost:30900 and the alert manager under http://localhost:30903
-
-1. Deploy Grafana:
-
-   ```console
-   $ make deploy-grafana
-   ```
-
-   You can now access Grafana under http://localhost:30000
-
-   There should be a Dashboard called "Main" with a few panels.
-
-## Alternatives?
-
-- Elastic stack: https://www.elastic.co/elasticsearch-kubernetes
-- Datadog: https://www.datadoghq.com/product/

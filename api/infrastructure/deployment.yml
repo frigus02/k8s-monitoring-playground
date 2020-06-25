@@ -15,7 +15,6 @@ spec:
       containers:
         - name: api
           image: localhost:5000/monitoring-api
-          imagePullPolicy: Never
           ports:
             - containerPort: 80
             - containerPort: 24231
