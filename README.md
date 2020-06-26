@@ -26,16 +26,22 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 1. Install [`linkerd`](https://linkerd.io/2/getting-started/#step-1-install-the-cli).
 
-1. Start local Docker registry:
-
-   ```console
-   $ make registry
-   ```
-
 1. Start local Kubernetes server:
 
    ```console
    $ make cluster
+   ```
+
+1. Deploy Linkerd
+
+   ```console
+   $ make linkerd
+   ```
+
+1. Deploy Ingress controller
+
+   ```console
+   $ make ingress
    ```
 
 1. Deploy API:
@@ -43,3 +49,29 @@ This contains demo configurations for one application ([api](./api)) and tools t
    ```console
    $ make deploy-api
    ```
+
+## TODO
+
+- Install Jaeger all-in-one
+
+- Install OpenTelemetry collector
+- Configure OpenTelemetry collector:
+
+  - trace receivers: opentelemetry, zipkin for nginx, opencensus for proxies
+  - trace exporters: jaeger
+  - metrics receivers: opentelemetry
+  - metrics exporters: prometheus
+
+- Enable trace collector for API proxy with annotations
+- Instrument API
+- Install OpenTelemetry agent with API
+- Change API Prometheus instrumentation to use OpenTelemetry metrics instead
+
+- Add trace collector to nginx proxies:
+
+  ```
+   --trace-collector
+   --trace-collector-svc-account
+  ```
+
+- Enable tracing for nginx itself
