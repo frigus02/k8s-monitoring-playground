@@ -24,6 +24,7 @@ data:
     exporters:
       jaeger:
         endpoint: jaeger.jaeger.svc.cluster.local:14250
+        insecure: true
       #prometheus:
       #  endpoint: linkerd-prometheus.linkerd.svc.cluster.local:9090
     extensions:
