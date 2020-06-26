@@ -29,5 +29,10 @@ ingress: ## Deploys NGINX ingress
 		--selector=app.kubernetes.io/component=controller \
 		--timeout=90s
 
+.PHONY: jaeger
+jaeger: ## Deploy Jaeger All in One
+	kubectl apply -f jaeger/namespace.yml
+	kubectl apply -f jaeger/
+
 help: ## Display this help. Thanks to https://suva.sh/posts/well-documented-makefiles/
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)

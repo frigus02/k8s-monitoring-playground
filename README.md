@@ -44,6 +44,12 @@ This contains demo configurations for one application ([api](./api)) and tools t
    $ make ingress
    ```
 
+1. Deploy Jaeger
+
+   ```console
+   $ make jaeger
+   ```
+
 1. Deploy API:
 
    ```console
@@ -51,8 +57,6 @@ This contains demo configurations for one application ([api](./api)) and tools t
    ```
 
 ## TODO
-
-- Install Jaeger all-in-one
 
 - Install OpenTelemetry collector
 - Configure OpenTelemetry collector:
