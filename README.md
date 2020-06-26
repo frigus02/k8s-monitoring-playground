@@ -67,3 +67,5 @@ This contains demo configurations for one application ([api](./api)) and tools t
 - Instrument API
 - Install OpenTelemetry agent with API
 - Change API Prometheus instrumentation to use OpenTelemetry metrics instead
+- Test with Application Insights
+- Are spans duplicated in Jaeger? Looks like all spans are there twice
