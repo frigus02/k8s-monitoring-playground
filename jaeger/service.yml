@@ -9,6 +9,6 @@ spec:
     app.kubernetes.io/name: jaeger
   ports:
     - name: collection
-      port: 14268
+      port: 14250
     - name: ui
       port: 16686

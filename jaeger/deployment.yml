@@ -24,7 +24,7 @@ spec:
             - --query.base-path=/jaeger
           name: jaeger
           ports:
-            - containerPort: 14268
+            - containerPort: 14250
               name: collection
             - containerPort: 16686
               name: ui

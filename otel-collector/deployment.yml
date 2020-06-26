@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: otel-collector
+  name: otel-collector
+  namespace: otel-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: otel-collector
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8888"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: otel-collector
+    spec:
+      containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.4.0
+          ports:
+            - containerPort: 55678 # OpenCensus
+            - containerPort: 55680 # OpenTelemetry
+            - containerPort: 9411 # Zipkin
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 13133
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 13133
+          volumeMounts:
+            - mountPath: /etc/otel
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: otel-collector

@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-collector
+  namespace: otel-collector
+data:
+  config.yaml: |
+    receivers:
+      opencensus:
+      otlp:
+      zipkin:
+    processors:
+      memory_limiter:
+        check_interval: 5s
+        limit_mib: 100
+        spike_limit_mib: 10
+      batch:
+        send_batch_size: 50
+        timeout: 2s
+      queued_retry:
+        backoff_delay: 5s
+        num_workers: 2
+        queue_size: 10
+    exporters:
+      jaeger:
+        endpoint: jaeger.jaeger.svc.cluster.local:14250
+      #prometheus:
+      #  endpoint: linkerd-prometheus.linkerd.svc.cluster.local:9090
+    extensions:
+      health_check:
+    service:
+        extensions: [health_check]
+        pipelines:
+          #metrics:
+          #  receivers: [otlp]
+          #  exporters: [prometheus]
+          traces:
+            receivers: [opencensus, otlp, zipkin]
+            processors: [memory_limiter, batch, queued_retry]
+            exporters: [jaeger]

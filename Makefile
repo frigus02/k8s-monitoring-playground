@@ -34,5 +34,10 @@ jaeger: ## Deploy Jaeger All in One
 	kubectl apply -f jaeger/namespace.yml
 	kubectl apply -f jaeger/
 
+.PHONY: otel-collector
+otel-collector: ## Deploy OpenTelemetry Collector
+	kubectl apply -f otel-collector/namespace.yml
+	kubectl apply -f otel-collector/
+
 help: ## Display this help. Thanks to https://suva.sh/posts/well-documented-makefiles/
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)

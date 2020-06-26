@@ -50,6 +50,12 @@ This contains demo configurations for one application ([api](./api)) and tools t
    $ make jaeger
    ```
 
+1. Deploy OpenTelemetry Collector
+
+   ```console
+   $ make otel-collector
+   ```
+
 1. Deploy API:
 
    ```console
