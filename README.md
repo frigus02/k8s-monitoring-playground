@@ -64,24 +64,6 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 ## TODO
 
-- Install OpenTelemetry collector
-- Configure OpenTelemetry collector:
-
-  - trace receivers: opentelemetry, zipkin for nginx, opencensus for proxies
-  - trace exporters: jaeger
-  - metrics receivers: opentelemetry
-  - metrics exporters: prometheus
-
-- Enable trace collector for API proxy with annotations
 - Instrument API
 - Install OpenTelemetry agent with API
 - Change API Prometheus instrumentation to use OpenTelemetry metrics instead
-
-- Add trace collector to nginx proxies:
-
-  ```
-   --trace-collector
-   --trace-collector-svc-account
-  ```
-
-- Enable tracing for nginx itself

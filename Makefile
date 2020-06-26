@@ -20,6 +20,8 @@ linkerd: ## Deploy Linkerd 2
 	linkerd install | kubectl apply -f -
 	linkerd check
 	kubectl annotate namespace default linkerd.io/inject=enabled
+	kubectl annotate namespace default config.linkerd.io/trace-collector=otel-collector.otel-collector:55678
+	kubectl annotate namespace default config.alpha.linkerd.io/trace-collector-service-account=default
 
 .PHONY: ingress
 ingress: ## Deploys NGINX ingress

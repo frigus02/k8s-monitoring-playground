@@ -5,7 +5,8 @@
 # https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
 #
 # The file has been modified in the following ways:
-# - Annotation "linkerd.io/inject: enabled" added to deployment
+# - Annotation "linkerd.io/inject: enabled" added to pod
+# - Annotations "config.linkerd.io/trace-collector" and "config.alpha.linkerd.io/trace-collector-service-account" added to pod
 # - ConfigMap keys enable-opentracing, zipkin-collector-host, zipkin-service-name added
 
 apiVersion: v1
@@ -322,8 +323,6 @@ metadata:
     app.kubernetes.io/version: 0.33.0
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: controller
-  annotations:
-    linkerd.io/inject: enabled
   name: ingress-nginx-controller
   namespace: ingress-nginx
 spec:
@@ -346,6 +345,8 @@ spec:
         app.kubernetes.io/component: controller
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/trace-collector: otel-collector.otel-collector:55678
+        config.alpha.linkerd.io/trace-collector-service-account: default
     spec:
       dnsPolicy: ClusterFirst
       containers:

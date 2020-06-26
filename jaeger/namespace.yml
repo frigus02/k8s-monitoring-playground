@@ -4,3 +4,5 @@ metadata:
   name: jaeger
   annotations:
     linkerd.io/inject: enabled
+    config.linkerd.io/trace-collector: otel-collector.otel-collector:55678
+    config.alpha.linkerd.io/trace-collector-service-account: default
