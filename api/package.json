@@ -7,6 +7,13 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "prom-client": "^11.5.3"
+    "@opentelemetry/api": "^0.9.0",
+    "@opentelemetry/core": "^0.9.0",
+    "@opentelemetry/exporter-collector": "^0.9.0",
+    "@opentelemetry/exporter-prometheus": "^0.9.0",
+    "@opentelemetry/metrics": "^0.9.0",
+    "@opentelemetry/node": "^0.9.0",
+    "@opentelemetry/plugin-http": "^0.9.0",
+    "@opentelemetry/tracing": "^0.9.0"
   }
 }

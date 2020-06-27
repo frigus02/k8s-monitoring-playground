@@ -17,7 +17,10 @@ spec:
           image: localhost:5000/monitoring-api
           ports:
             - containerPort: 80
-            - containerPort: 24231
+            - containerPort: 9464
+          env:
+            - name: OTEL_COLLECTOR_ENDPOINT
+              value: otel-collector.otel-collector:55680
           readinessProbe:
             httpGet:
               path: /health
