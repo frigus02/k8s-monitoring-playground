@@ -42,7 +42,10 @@ const metricsExporter = new PrometheusExporter({
   startServer: true,
   endpoint: "/metrics",
 });
-const meter = new MeterProvider({ exporter: metricsExporter }).getMeter("api");
+const meter = new MeterProvider({
+  exporter: metricsExporter,
+  interval: 1000,
+}).getMeter("api");
 
 // THEN: Application code
 

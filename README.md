@@ -64,5 +64,6 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 ## TODO
 
-- Change API Prometheus instrumentation to use OpenTelemetry metrics instead
 - Test with Application Insights
+- Improve documentation of Azure Monitor exporter in opentelemetry-collector-contrib repo
+- Add support for events in Azure Monitor exporter
