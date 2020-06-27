@@ -25,16 +25,13 @@ data:
       jaeger:
         endpoint: jaeger.jaeger.svc.cluster.local:14250
         insecure: true
-      #prometheus:
-      #  endpoint: linkerd-prometheus.linkerd.svc.cluster.local:9090
+      azuremonitor:
+        instrumentation_key: 42bf07c2-1503-4971-b706-5e6ba4ae9344
     extensions:
       health_check:
     service:
         extensions: [health_check]
         pipelines:
-          #metrics:
-          #  receivers: [otlp]
-          #  exporters: [prometheus]
           traces:
             receivers: [opencensus, otlp, zipkin]
             processors: [memory_limiter, batch, queued_retry]

@@ -64,6 +64,8 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 ## TODO
 
-- Test with Application Insights
 - Improve documentation of Azure Monitor exporter in opentelemetry-collector-contrib repo
 - Add support for events in Azure Monitor exporter
+- ResponseCode and ResultCode not set for spans coming from opentelemetry-js (plugin-http). Is that because attribute type is not int/string but Float?
+- Update `peer.` and `host.` attributes to `net.peer.` and `net.host.`
+- Support span kinds CONSUMER and PRODUCER
