@@ -53,7 +53,7 @@ This contains demo configurations for one application ([api](./api)) and tools t
 1. Deploy API:
 
    ```console
-   $ make deploy-api
+   $ make api
    ```
 
 ## TODO

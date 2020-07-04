@@ -1,14 +1,8 @@
 .DEFAULT_GOAL:=help
-OPEN:=$$(command -v cmd.exe >/dev/null && echo 'cmd.exe /C start ""' || echo 'open')
 
-deploy-api: ## Deploy API
+.PHONY: api
+api: ## Deploy API
 	@cd api && ./deploy.sh
-
-open-grafana: ## Open Grafana in browser
-	@$(OPEN) http://localhost:30000
-
-open-prometheus: ## Open Prometheus in browser
-	@$(OPEN) http://localhost:30900
 
 .PHONY: cluster
 cluster: ## Start Kubernetes cluster using kind
@@ -24,7 +18,7 @@ linkerd: ## Deploy Linkerd 2
 	kubectl annotate namespace default config.alpha.linkerd.io/trace-collector-service-account=default
 
 .PHONY: ingress
-ingress: ## Deploys NGINX ingress
+ingress: ## Deploy NGINX ingress
 	kubectl apply -f ingress/install.yaml
 	kubectl wait --namespace ingress-nginx \
 		--for=condition=ready pod \
@@ -41,5 +35,6 @@ otel-collector: ## Deploy OpenTelemetry Collector
 	kubectl apply -f otel-collector/namespace.yml
 	kubectl apply -f otel-collector/
 
+.PHONY: help
 help: ## Display this help. Thanks to https://suva.sh/posts/well-documented-makefiles/
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
