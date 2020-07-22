@@ -8,6 +8,8 @@ data:
     receivers:
       opencensus:
       otlp:
+        protocols:
+          grpc:
       zipkin:
     processors:
       memory_limiter:

@@ -27,13 +27,15 @@ ingress: ## Deploy NGINX ingress
 
 .PHONY: jaeger
 jaeger: ## Deploy Jaeger All in One
-	kubectl apply -f jaeger/namespace.yml
-	kubectl apply -f jaeger/
+	kubectl apply -k jaeger
 
 .PHONY: otel-collector
 otel-collector: ## Deploy OpenTelemetry Collector
-	kubectl apply -f otel-collector/namespace.yml
-	kubectl apply -f otel-collector/
+	kubectl apply -k otel-collector
+
+.PHONY: metrics-server
+metrics-server: ## Deploy Metrics Server
+	kubectl apply -f metrics-server/0.3.6.yaml
 
 .PHONY: help
 help: ## Display this help. Thanks to https://suva.sh/posts/well-documented-makefiles/
