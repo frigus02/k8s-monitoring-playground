@@ -61,6 +61,16 @@
     "@opentelemetry/metrics" "^0.9.0"
     prom-client "^11.5.3"
 
+"@opentelemetry/exporter-zipkin@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/exporter-zipkin/-/exporter-zipkin-0.9.0.tgz#2021da5e66c9bb6f5d04e0a2a7247e550a7d6569"
+  integrity sha512-Ee+xsmzkKrp67UauTWumi5ICvLq8sEODPqNIAdkZT1Icdz9llJN5jhQjM7BNlgQ85VQ4+I/g2k9msa1g0MOBGw==
+  dependencies:
+    "@opentelemetry/api" "^0.9.0"
+    "@opentelemetry/core" "^0.9.0"
+    "@opentelemetry/resources" "^0.9.0"
+    "@opentelemetry/tracing" "^0.9.0"
+
 "@opentelemetry/metrics@^0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/metrics/-/metrics-0.9.0.tgz#b5c4b75ac0b12330540128a2c0f51e223e638dfb"

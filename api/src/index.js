@@ -21,6 +21,13 @@ if (process.env.OTEL_COLLECTOR_ENDPOINT) {
     url: process.env.OTEL_COLLECTOR_ENDPOINT,
   });
   provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+} else if (process.env.ZIPKIN_COLLECTOR_ENDPOINT) {
+  const { ZipkinExporter } = require("@opentelemetry/exporter-zipkin");
+  const exporter = new ZipkinExporter({
+    serviceName: "api",
+    url: process.env.ZIPKIN_COLLECTOR_ENDPOINT,
+  });
+  provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
 } else {
   const { ConsoleSpanExporter } = require("@opentelemetry/tracing");
   const exporter = new ConsoleSpanExporter();

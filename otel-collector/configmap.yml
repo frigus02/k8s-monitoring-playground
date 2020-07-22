@@ -31,8 +31,9 @@ data:
         instrumentation_key: 42bf07c2-1503-4971-b706-5e6ba4ae9344
     extensions:
       health_check:
+      zpages:
     service:
-        extensions: [health_check]
+        extensions: [health_check, zpages]
         pipelines:
           traces:
             receivers: [opencensus, otlp, zipkin]
