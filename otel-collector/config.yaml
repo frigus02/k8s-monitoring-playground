@@ -1,0 +1,34 @@
+receivers:
+  opencensus:
+  otlp:
+    protocols:
+      grpc:
+  zipkin:
+processors:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 100
+    spike_limit_mib: 10
+  batch:
+    send_batch_size: 50
+    timeout: 2s
+  queued_retry:
+    backoff_delay: 5s
+    num_workers: 2
+    queue_size: 10
+exporters:
+  jaeger:
+    endpoint: jaeger.jaeger.svc.cluster.local:14250
+    insecure: true
+  azuremonitor:
+    instrumentation_key: 42bf07c2-1503-4971-b706-5e6ba4ae9344
+extensions:
+  health_check:
+  zpages:
+service:
+  extensions: [health_check, zpages]
+  pipelines:
+    traces:
+      receivers: [opencensus, otlp, zipkin]
+      processors: [memory_limiter, batch, queued_retry]
+      exporters: [azuremonitor]

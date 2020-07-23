@@ -9,4 +9,4 @@ docker push $TAG
 
 kyml cat infrastructure/* |
     kyml resolve |
-    kubectl apply -f -
+    kubectl apply -f - -n default

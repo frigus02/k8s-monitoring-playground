@@ -31,7 +31,7 @@ jaeger: ## Deploy Jaeger All in One
 
 .PHONY: otel-collector
 otel-collector: ## Deploy OpenTelemetry Collector
-	kubectl apply -k otel-collector
+	kubectl apply -k otel-collector -n otel-collector
 
 .PHONY: metrics-server
 metrics-server: ## Deploy Metrics Server

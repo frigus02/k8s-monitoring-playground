@@ -4,4 +4,7 @@ resources:
   - namespace.yml
   - deployment.yml
   - service.yml
-  - configmap.yml
+configMapGenerator:
+- name: otel-collector
+  files:
+  - config.yaml
