@@ -1,5 +1,8 @@
 .DEFAULT_GOAL:=help
 
+.PHONY: all
+all: cluster linkerd ingress jaeger otel-collector api ## Install everything
+
 .PHONY: api
 api: ## Deploy API
 	@cd api && ./deploy.sh
@@ -10,16 +13,18 @@ cluster: ## Start Kubernetes cluster using kind
 
 .PHONY: linkerd
 linkerd: ## Deploy Linkerd 2
-	linkerd check --pre
-	linkerd install | kubectl apply -f -
-	linkerd check
-	kubectl annotate namespace default linkerd.io/inject=enabled
-	kubectl annotate namespace default config.linkerd.io/trace-collector=otel-collector.otel-collector:55678
-	kubectl annotate namespace default config.alpha.linkerd.io/trace-collector-service-account=default
+	linkerd check || {\
+		linkerd check --pre;\
+		linkerd install | kubectl apply -f -;\
+		linkerd check;\
+		kubectl annotate namespace default linkerd.io/inject=enabled;\
+		kubectl annotate namespace default config.linkerd.io/trace-collector=otel-collector.otel-collector:55678;\
+		kubectl annotate namespace default config.alpha.linkerd.io/trace-collector-service-account=default;\
+	}
 
 .PHONY: ingress
 ingress: ## Deploy NGINX ingress
-	kubectl apply -f ingress/install.yaml
+	kubectl apply -f ingress-nginx/install.yaml
 	kubectl wait --namespace ingress-nginx \
 		--for=condition=ready pod \
 		--selector=app.kubernetes.io/component=controller \
@@ -32,6 +37,7 @@ jaeger: ## Deploy Jaeger All in One
 .PHONY: otel-collector
 otel-collector: ## Deploy OpenTelemetry Collector
 	kubectl apply -k otel-collector -n otel-collector
+	kubectl rollout status -n otel-collector deployment otel-collector
 
 .PHONY: metrics-server
 metrics-server: ## Deploy Metrics Server

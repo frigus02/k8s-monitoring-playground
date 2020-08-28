@@ -31,4 +31,4 @@ service:
     traces:
       receivers: [opencensus, otlp, zipkin]
       processors: [memory_limiter, batch, queued_retry]
-      exporters: [azuremonitor]
+      exporters: [jaeger]
