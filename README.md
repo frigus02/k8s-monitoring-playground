@@ -20,44 +20,13 @@ This contains demo configurations for one application ([api](./api)) and tools t
 
 1. Install [`linkerd`](https://linkerd.io/2/getting-started/#step-1-install-the-cli).
 
-1. Start local Kubernetes server:
+1. Start everything:
 
    ```console
-   $ make cluster
-   ```
-
-1. Deploy Linkerd
-
-   ```console
-   $ make linkerd
-   ```
-
-1. Deploy Ingress controller
-
-   ```console
-   $ make ingress
-   ```
-
-1. Deploy Jaeger
-
-   ```console
-   $ make jaeger
-   ```
-
-1. Deploy OpenTelemetry Collector
-
-   ```console
-   $ make otel-collector
-   ```
-
-1. Deploy API:
-
-   ```console
-   $ make api
+   $ make all
    ```
 
 ## TODO
 
-- Improve documentation of Azure Monitor exporter in opentelemetry-collector-contrib repo
 - Add support for events in Azure Monitor exporter
 - ResponseCode and ResultCode not set for spans coming from opentelemetry-js (plugin-http). Is that because attribute type is not int/string but Float?

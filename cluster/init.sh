@@ -53,5 +53,5 @@ fi
 # https://docs.tilt.dev/choosing_clusters.html#discovering-the-registry
 echo "Annotating nodes..."
 for node in $(kind get nodes); do
-	kubectl annotate node "$node" "kind.x-k8s.io/registry=localhost:$reg_port";
+	kubectl annotate node --overwrite "$node" "kind.x-k8s.io/registry=localhost:$reg_port";
 done

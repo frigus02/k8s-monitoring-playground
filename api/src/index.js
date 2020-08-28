@@ -124,7 +124,7 @@ async function middleware(req, res) {
     Number((process.hrtime.bigint() - requestStart) / BigInt(1e6));
 
   try {
-    if (req.url === "/") {
+    if (req.url === "/api") {
       res.statusCode = 200;
       res.setHeader("Content-Type", "text/html");
       res.write(`
@@ -139,11 +139,11 @@ async function middleware(req, res) {
         </body>
         </html>
       `);
-    } else if (req.url === "/redirect") {
+    } else if (req.url === "/api/redirect") {
       res.statusCode = 302;
-      res.setHeader("Location", "/");
+      res.setHeader("Location", "/api");
       res.write("Found /");
-    } else if (req.url === "/user") {
+    } else if (req.url === "/api/user") {
       const span = tracer.startSpan("user");
       try {
         await tracer.withSpan(span, async () => {

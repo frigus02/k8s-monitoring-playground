@@ -7,14 +7,14 @@
     "start": "node src/index.js"
   },
   "dependencies": {
-    "@opentelemetry/api": "^0.9.0",
-    "@opentelemetry/core": "^0.9.0",
-    "@opentelemetry/exporter-collector": "^0.9.0",
-    "@opentelemetry/exporter-prometheus": "^0.9.0",
-    "@opentelemetry/exporter-zipkin": "^0.9.0",
-    "@opentelemetry/metrics": "^0.9.0",
-    "@opentelemetry/node": "^0.9.0",
-    "@opentelemetry/plugin-http": "^0.9.0",
-    "@opentelemetry/tracing": "^0.9.0"
+    "@opentelemetry/api": "^0.10.2",
+    "@opentelemetry/core": "^0.10.2",
+    "@opentelemetry/exporter-collector": "^0.10.2",
+    "@opentelemetry/exporter-prometheus": "^0.10.2",
+    "@opentelemetry/exporter-zipkin": "^0.10.2",
+    "@opentelemetry/metrics": "^0.10.2",
+    "@opentelemetry/node": "^0.10.2",
+    "@opentelemetry/plugin-http": "^0.10.2",
+    "@opentelemetry/tracing": "^0.10.2"
   }
 }

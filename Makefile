@@ -1,7 +1,7 @@
 .DEFAULT_GOAL:=help
 
 .PHONY: all
-all: cluster linkerd ingress jaeger otel-collector api ## Install everything
+all: cluster linkerd ingress-traefik jaeger otel-collector api ## Install everything
 
 .PHONY: api
 api: ## Deploy API
@@ -22,8 +22,13 @@ linkerd: ## Deploy Linkerd 2
 		kubectl annotate namespace default config.alpha.linkerd.io/trace-collector-service-account=default;\
 	}
 
-.PHONY: ingress
-ingress: ## Deploy NGINX ingress
+.PHONY: ingress-traefik
+ingress-traefik: ## Deploy Traefik ingress
+	kubectl apply -f ingress-traefik/install.yaml
+	kubectl rollout status -n ingress-traefik deployment ingress-traefik
+
+.PHONY: ingress-nginx
+ingress-nginx: ## Deploy NGINX ingress
 	kubectl apply -f ingress-nginx/install.yaml
 	kubectl wait --namespace ingress-nginx \
 		--for=condition=ready pod \
